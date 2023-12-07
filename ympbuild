@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+name='java'
+release='1'
+version='21.0.1'
+url='https://www.oracle.com/java/technologies/downloads/'
+description='Java bin package'
+email='aliriza.keskin@pardus.org.tr'
+maintainer='aliriza'
+license=('GPLv3')
+source=('https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.tar.gz')
+depends=()
+makedepends=()
+md5sums=('SKIP')
+group=()
+uses=()
+arch=('x86_64')
+
+
+package () {
+    mkdir -p $DESTDIR/usr/share/java-$version/  $DESTDIR/etc/profile.d/
+    cp -prvf jdk-$version/* $DESTDIR/usr/share/java-$version/
+    echo "#!/bin/sh" > $DESTDIR/etc/profile.d/zz-java-$version.sh
+    echo "export PATH=\$PATH:/usr/share/java-$version/bin" >> $DESTDIR/etc/profile.d/zz-java-$version.sh
+    echo "export JAVA_HOME=/usr/share/java-$version" >> $DESTDIR/etc/profile.d/zz-java-$version.sh
+}
+
